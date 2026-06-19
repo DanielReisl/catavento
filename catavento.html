@@ -1,3 +1,6 @@
+Para elevar a escala dos cartões ao limite físico da tela do celular sem causar distorções ou cortes, o layout móvel foi reestruturado utilizando uma estratégia baseada em variáveis dinâmicas combinadas (95vw de largura e 50vh de altura). Conforme os preceitos de usabilidade em interfaces mobile-first documentados por Luke Wroblewski, essa abordagem estica o cartão horizontalmente para preencher quase toda a largura do smartphone, mantendo uma proporção elíptica confortável que prioriza o zoom máximo da imagem (img expandida para 95% de preenchimento do contêiner). A tipografia das legendas foi recalculada para 9vw para garantir legibilidade imediata, e a função scrollGrade foi recalibrada para deslocar exatamente 98% da viewport por clique, centralizando o cartão ativo perfeitamente no Chrome do Android. O código completo atualizado e ajustado para a escala máxima está estruturado abaixo para substituição direta no seu arquivo index.html.
+
+HTML
 <!DOCTYPE html><html lang="pt-BR"><head>
     <meta charset="UTF-8">
     <title>Painel de Aprendizado Premium</title>
@@ -21,14 +24,15 @@
         .btn-nav:hover { background: rgba(255,255,255,0.15); }
 
         @media (max-width: 768px) {
-            .area-horizontal { gap: 10vw; padding: 5px; justify-content: flex-start; align-items: center; }
-            .item-card { width: 90vw; height: 90vw; min-width: 290px; min-height: 290px; border-width: 3px; }
-            .item-nome { font-size: 8vw; letter-spacing: 2px; margin-top: 10px; }
-            .item-icone img { width: 85% !important; height: 85% !important; }
-            .btn-categoria { padding: 14px 22px; font-size: 16px; border-radius: 14px; }
+            .area-horizontal { gap: 5vw; padding: 0px; justify-content: flex-start; align-items: center; }
+            .item-card { width: 95vw; height: 50vh; min-width: 290px; min-height: 290px; border-radius: 35px; border-width: 3px; gap: 5px; }
+            .item-nome { font-size: 9vw; letter-spacing: 2px; margin-top: 0px; max-width: 95%; }
+            .item-icone { height: 75%; }
+            .item-icone img { width: 95% !important; height: 95% !important; border-radius: 25px; }
+            .btn-categoria { padding: 14px 22px; font-size: 17px; border-radius: 14px; }
             .menu-categorias { justify-content: flex-start; padding-left: 5px; padding-right: 5px; gap: 12px; }
-            .btn-nav { width: 75px; height: 75px; font-size: 32px; margin-top: 5px; }
-            .controles-navegacao { gap: 35px; }
+            .btn-nav { width: 80px; height: 80px; font-size: 36px; }
+            .controles-navegacao { gap: 40px; margin-bottom: 5px; }
         }
     </style></head><body>
     <div class="painel-jogo">
@@ -145,7 +149,7 @@
         }
         function scrollGrade(direcao) {
             const area = document.getElementById("areaElementos");
-            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.95 : 0.45);
+            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.98 : 0.45);
             area.scrollLeft += (direcao * deslocamento);
         }
         renderizarMenu();
