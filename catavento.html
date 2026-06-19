@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html><html lang="pt-BR"><head>
     <meta charset="UTF-8">
     <title>Painel de Aprendizado Premium</title>
@@ -21,11 +22,13 @@
         .btn-nav:hover { background: rgba(255,255,255,0.15); }
 
         @media (max-width: 768px) {
-            .area-horizontal { gap: 5vw; padding: 10px; justify-content: flex-start; }
-            .item-card { width: 45vw; height: 45vw; min-width: 140px; min-height: 140px; }
-            .item-nome { font-size: 4vw; }
-            .btn-categoria { padding: 10px 18px; font-size: 14px; }
-            .menu-categorias { justify-content: flex-start; padding-left: 10px; padding-right: 10px; }
+            .area-horizontal { gap: 8vw; padding: 15px; justify-content: center; align-items: center; }
+            .item-card { width: 70vw; height: 70vw; min-width: 260px; min-height: 260px; }
+            .item-nome { font-size: 6vw; margin-top: 5px; }
+            .item-icone img { width: 80% !important; height: 80% !important; }
+            .btn-categoria { padding: 12px 20px; font-size: 15px; }
+            .menu-categorias { justify-content: flex-start; padding-left: 15px; padding-right: 15px; }
+            .btn-nav { width: 65px; height: 65px; font-size: 26px; }
         }
     </style></head><body>
     <div class="painel-jogo">
@@ -142,7 +145,7 @@
         }
         function scrollGrade(direcao) {
             const area = document.getElementById("areaElementos");
-            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.80 : 0.45);
+            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.85 : 0.45);
             area.scrollLeft += (direcao * deslocamento);
         }
         renderizarMenu();
