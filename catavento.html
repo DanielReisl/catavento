@@ -1,8 +1,6 @@
-Para elevar a escala dos cartões ao limite físico da tela do celular sem causar distorções ou cortes, o layout móvel foi reestruturado utilizando uma estratégia baseada em variáveis dinâmicas combinadas (95vw de largura e 50vh de altura). Conforme os preceitos de usabilidade em interfaces mobile-first documentados por Luke Wroblewski, essa abordagem estica o cartão horizontalmente para preencher quase toda a largura do smartphone, mantendo uma proporção elíptica confortável que prioriza o zoom máximo da imagem (img expandida para 95% de preenchimento do contêiner). A tipografia das legendas foi recalculada para 9vw para garantir legibilidade imediata, e a função scrollGrade foi recalibrada para deslocar exatamente 98% da viewport por clique, centralizando o cartão ativo perfeitamente no Chrome do Android. O código completo atualizado e ajustado para a escala máxima está estruturado abaixo para substituição direta no seu arquivo index.html.
-
-HTML
 <!DOCTYPE html><html lang="pt-BR"><head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Aprendizado Premium</title>
     <style>
         :root { color-scheme: light dark; --bg-color: #0b111e; --accent-color: #1e90ff; }
@@ -23,16 +21,16 @@ HTML
         .btn-nav { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
         .btn-nav:hover { background: rgba(255,255,255,0.15); }
 
-        @media (max-width: 768px) {
-            .area-horizontal { gap: 5vw; padding: 0px; justify-content: flex-start; align-items: center; }
-            .item-card { width: 95vw; height: 50vh; min-width: 290px; min-height: 290px; border-radius: 35px; border-width: 3px; gap: 5px; }
-            .item-nome { font-size: 9vw; letter-spacing: 2px; margin-top: 0px; max-width: 95%; }
-            .item-icone { height: 75%; }
-            .item-icone img { width: 95% !important; height: 95% !important; border-radius: 25px; }
-            .btn-categoria { padding: 14px 22px; font-size: 17px; border-radius: 14px; }
-            .menu-categorias { justify-content: flex-start; padding-left: 5px; padding-right: 5px; gap: 12px; }
-            .btn-nav { width: 80px; height: 80px; font-size: 36px; }
-            .controles-navegacao { gap: 40px; margin-bottom: 5px; }
+        @media screen and (max-width: 768px) {
+            .area-horizontal { gap: 6vw !important; padding: 0 10vw !important; justify-content: flex-start !important; align-items: center !important; }
+            .item-card { width: 80vw !important; height: 55vh !important; min-width: 260px !important; min-height: 260px !important; border-radius: 40px !important; border-width: 4px !important; gap: 15px !important; }
+            .item-nome { font-size: 9vw !important; letter-spacing: 2px !important; margin-top: 5px !important; max-width: 95% !important; color: #fff !important; }
+            .item-icone { height: 75% !important; }
+            .item-icone img { width: 95% !important; height: 95% !important; border-radius: 30px !important; object-fit: contain !important; }
+            .btn-categoria { padding: 14px 22px !important; font-size: 18px !important; border-radius: 14px !important; }
+            .menu-categorias { justify-content: flex-start !important; padding-left: 10px !important; padding-right: 10px !important; gap: 12px !important; }
+            .btn-nav { width: 85px !important; height: 85px !important; font-size: 40px !important; border-width: 2px !important; }
+            .controles-navegacao { gap: 50px !important; margin-bottom: 15px !important; }
         }
     </style></head><body>
     <div class="painel-jogo">
@@ -149,7 +147,7 @@ HTML
         }
         function scrollGrade(direcao) {
             const area = document.getElementById("areaElementos");
-            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.98 : 0.45);
+            const deslocamento = window.innerWidth * (window.innerWidth <= 768 ? 0.86 : 0.45);
             area.scrollLeft += (direcao * deslocamento);
         }
         renderizarMenu();
