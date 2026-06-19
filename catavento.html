@@ -73,6 +73,11 @@
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = carregarVozes;
             carregarVozes();
+            try {
+                const triggerSilencioso = new SpeechSynthesisUtterance("");
+                triggerSilencioso.volume = 0;
+                window.speechSynthesis.speak(triggerSilencioso);
+            } catch(e) {}
         }
 
         function obterMelhorVoz() {
@@ -132,10 +137,11 @@
                         utterance.lang = 'pt-BR';
                         utterance.rate = 0.90;
                         utterance.pitch = 1.05;
+                        if (vozesDisponiveis.length === 0) carregarVozes();
                         const melhorVoz = obterMelhorVoz();
                         if (melhorVoz) utterance.voice = melhorVoz;
                         window.speechSynthesis.speak(utterance);
-                    }, 20);
+                    }, 50);
                 } catch(e) { console.error("Erro na síntese de voz:", e); }
             }
         }
