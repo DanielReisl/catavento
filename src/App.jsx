@@ -149,12 +149,10 @@ const bancoDados = {
     { n: "Cone", i: "/imagens/formas/cone.png" },
     { n: "Oval", i: "/imagens/formas/oval.png" },
     { n: "Octogono", i: "/imagens/formas/octogono.png" },
-    { n: "Crescent", i: "/imagens/formas/crescent.png" },
     { n: "Seta", i: "/imagens/formas/seta.png" },
     { n: "Trapezio", i: "/imagens/formas/trapezio.png" },
     { n: "Cruz", i: "/imagens/formas/cruz.png" },
     { n: "Arco", i: "/imagens/formas/arco.png" },
-    { n: "Zig-zag", i: "/imagens/formas/zigzag.png" }
   ],
   alfabeto: [
     { n: "Letra A", v: "A", isText: true }, { n: "Letra B", v: "B", isText: true },
