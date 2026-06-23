@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 const bancoDados = {
   cozinha: [
@@ -180,6 +181,24 @@ const bancoDados = {
 };
 
 export default function App() {
+    const [eventoInstalacao, setEventoInstalacao] = useState(null);
+
+  useEffect(() => {
+    const capturarEvent = (e) => {
+      e.preventDefault();
+      setEventoInstalacao(e);
+    };
+    window.addEventListener('beforeinstallprompt', capturarEvent);
+    return () => window.removeEventListener('beforeinstallprompt', capturarEvent);
+  }, []);
+
+  const dispararInstalacao = async () => {
+    if (!eventoInstalacao) return;
+    eventoInstalacao.prompt();
+    const { outcome } = await eventoInstalacao.userChoice;
+    if (outcome === 'accepted') setEventoInstalacao(null);
+  };
+  
   const [categoria, setCategoria] = useState("cozinha");
   const areaRef = useRef(null);
 
