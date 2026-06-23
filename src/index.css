@@ -83,4 +83,9 @@ html, body, #root {
 .area-horizontal {
   touch-action: pan-x; 
   -webkit-overflow-scrolling: touch;
+} 
+* {
+  -webkit-touch-callout: none !important; /* Desativa o menu de contexto no iOS/Android */
+  -webkit-user-select: none !important;  /* Desativa a seleção de texto no Chrome */
+  user-select: none !important;
 }
