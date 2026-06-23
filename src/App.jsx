@@ -283,6 +283,14 @@ useEffect(() => {
 
   return (
     <div className="painel-jogo">
+      {eventoInstalacao && (
+        <div style={{ position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: 9999, background: '#fff', padding: '15px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+          <p style={{ color: '#000', margin: '0 0 10px 0' }}>Deseja instalar o Painel Catavento no tablet?</p>
+          <button onClick={dispararInstalacao} style={{ background: '#00cc66', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+            Instalar Aplicativo
+          </button>
+        </div>
+      )}
       <div className="menu-categorias">
         {Object.keys(bancoDados).map(cat => (
           <button 
