@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       strategies: 'generateSW',
+      manifestFilename: 'manifest.json', // <--- Força a extensão .json para a Vercel não dar 404
       registerType: 'autoUpdate',
       injectRegister: 'inline',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
