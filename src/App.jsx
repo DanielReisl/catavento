@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useEffect, useState } from 'react';
 
 const bancoDados = {
   cozinha: [
