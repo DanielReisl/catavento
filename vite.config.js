@@ -6,11 +6,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'generateSW',
       registerType: 'autoUpdate',
       injectRegister: 'inline',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg}']
+        globPatterns: ['**/*.{js,css,html,png,svg}'],
+        skipWaiting: true,
+        clientsClaim: true
       },
       manifest: {
         short_name: "Catavento",
