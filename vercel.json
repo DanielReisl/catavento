@@ -1,1 +1,12 @@
-
+{
+  "rewrites": [
+    {
+      "source": "/(manifest.json|sw.js|registerSW.js)",
+      "destination": "/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
