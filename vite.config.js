@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'inline',
       manifest: {
   "short_name": "Catavento",
   "name": "Catavento",
