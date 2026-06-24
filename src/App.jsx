@@ -19,7 +19,7 @@ const bancoDados = {
     { n: "Panela", i: "/imagens/cozinha/panela.png" },
     { n: "Pano de Prato", i: "/imagens/cozinha/panodeprato.png" },
     { n: "Xícara", i: "/imagens/cozinha/xicara.png" },
-],
+  ],
   quarto: [
     { n: "Cama", i: "/imagens/quarto/cama.png" },
     { n: "Guarda-roupa", i: "/imagens/quarto/guardaroupa.png" },
@@ -36,7 +36,6 @@ const bancoDados = {
     { n: "Penteadeira", i: "/imagens/quarto/penteadeira.png" },
     { n: "Caixa organizadora", i: "/imagens/quarto/caixaorganizadora.png" },
     { n: "Lençol", i: "/imagens/quarto/lencol.png" },
-    
   ],
   banheiro: [
     { n: "Toalha", i: "/imagens/banheiro/toalha.png" },
@@ -103,7 +102,7 @@ const bancoDados = {
     { n: "Tubarão", i: "/imagens/animais/tubarao.png" },
     { n: "Ovelha", i: "/imagens/animais/ovelha.png" },
   ],
-    ações: [
+  ações: [
     { n: "Comer", i: "/imagens/acoes/comer.png" },
     { n: "Beber", i: "/imagens/acoes/beber.png" },
     { n: "Correr", i: "/imagens/acoes/correr.png" },
@@ -126,7 +125,7 @@ const bancoDados = {
     { n: "Sentar", i: "/imagens/acoes/sentar.png" },
     { n: "Subir escada", i: "/imagens/acoes/subirescada.png" },
     { n: "Abrir o casaco", i: "/imagens/acoes/abrircasaco.png" },
-    { n: "Cheirar a flor", i: "/imagens/acoes/cheirarflor.png" },
+    { n: "Cheirar a flower", i: "/imagens/acoes/cheirarflor.png" },
     { n: "Alimentar o pet", i: "/imagens/acoes/alimentarpet.png" },
     { n: "Plantar", i: "/imagens/acoes/plantar.png" },
     { n: "Chorar", i: "/imagens/acoes/chorar.png" },
@@ -180,7 +179,10 @@ const bancoDados = {
 };
 
 export default function App() {
-    const [eventoInstalacao, setEventoInstalacao] = useState(null);
+  const [eventoInstalacao, setEventoInstalacao] = useState(null);
+  const [categoria, setCategoria] = useState("cozinha");
+  const [vozesDisponiveis, setVozesDisponiveis] = useState([]);
+  const areaRef = useRef(null);
 
   useEffect(() => {
     const capturarEvent = (e) => {
@@ -191,17 +193,19 @@ export default function App() {
     return () => window.removeEventListener('beforeinstallprompt', capturarEvent);
   }, []);
 
-  const dispararInstalacao = async () => {
-    if (!eventoInstalacao) return;
-    eventoInstalacao.prompt();
-    const { outcome } = await eventoInstalacao.userChoice;
-    if (outcome === 'accepted') setEventoInstalacao(null);
-  };
-  
-  const [categoria, setCategoria] = useState("cozinha");
-  const areaRef = useRef(null);
+  useEffect(() => {
+    const atualizarVozes = () => {
+      if ('speechSynthesis' in window) {
+        setVozesDisponiveis(window.speechSynthesis.getVoices());
+      }
+    };
+    atualizarVozes();
+    if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = atualizarVozes;
+    }
+  }, []);
 
-useEffect(() => {
+  useEffect(() => {
     const elemento = areaRef.current;
     if (!elemento) return;
 
@@ -215,28 +219,29 @@ useEffect(() => {
     elemento.addEventListener('wheel', gerenciarRodaMouse, { passive: false });
     return () => elemento.removeEventListener('wheel', gerenciarRodaMouse);
   }, [categoria]);
-useEffect(() => {
+
+  useEffect(() => {
     const prevenirZoomDuploToque = (e) => {
       if (e.touches && e.touches.length > 1) {
-        e.preventDefault(); // Bloqueia múltiplos dedos na tela simultaneamente
+        e.preventDefault();
       }
     };
-
-
     document.addEventListener('touchstart', prevenirZoomDuploToque, { passive: false });
-    return () => {
-      document.removeEventListener('touchstart', prevenirZoomDuploToque);
-    };
+    return () => document.removeEventListener('touchstart', prevenirZoomDuploToque);
   }, []);
 
   useEffect(() => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.getVoices();
-      if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-      }
-    }
+    const pularMenu = (e) => e.preventDefault();
+    document.addEventListener('contextmenu', pularMenu);
+    return () => document.removeEventListener('contextmenu', pularMenu);
   }, []);
+
+  const dispararInstalacao = async () => {
+    if (!eventoInstalacao) return;
+    eventoInstalacao.prompt();
+    const { outcome } = await eventoInstalacao.userChoice;
+    if (outcome === 'accepted') setEventoInstalacao(null);
+  };
 
   const falarItem = (texto) => {
     if (!('speechSynthesis' in window)) return;
@@ -250,7 +255,9 @@ useEffect(() => {
         u.rate = 0.82; 
         u.pitch = 1.05; 
 
-        const pt = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('pt'));
+        const pt = vozesDisponiveis.length > 0 
+          ? vozesDisponiveis.filter(v => v.lang.startsWith('pt'))
+          : window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('pt'));
 
         const melhorVoz = pt.find(x => x.name.toLowerCase().includes('google português do brasil')) ||
                           pt.find(x => x.name.toLowerCase().includes('google pt-br')) ||
@@ -281,21 +288,22 @@ useEffect(() => {
   };
 
   return (
-    <div className="painel-jogo">
+    <div className="painel-jogo" style={{ touchAction: 'none' }}>
       {eventoInstalacao && (
         <div style={{ position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: 9999, background: '#fff', padding: '15px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <p style={{ color: '#000', margin: '0 0 10px 0' }}>Deseja instalar o Painel Catavento no tablet?</p>
-          <button onClick={dispararInstalacao} style={{ background: '#00cc66', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+          <button onPointerDown={dispararInstalacao} style={{ background: '#00cc66', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', touchAction: 'none' }}>
             Instalar Aplicativo
           </button>
         </div>
       )}
-      <div className="menu-categorias">
+      <div className="menu-categorias" style={{ touchAction: 'none' }}>
         {Object.keys(bancoDados).map(cat => (
           <button 
             key={cat} 
             className={`btn-categoria ${cat === categoria ? 'ativo' : ''}`}
-            onClick={() => alternarCategoria(cat)}
+            onPointerDown={() => alternarCategoria(cat)}
+            style={{ touchAction: 'none' }}
           >
             {cat.toUpperCase()}
           </button>
@@ -303,8 +311,8 @@ useEffect(() => {
       </div>
 
       <div className="area-horizontal" ref={areaRef}>
-        {bancoDados[categoria].map((item, index) => (
-          <div key={index} className="item-card" onClick={() => falarItem(item.n)}>
+        {bancoDados[categoria].map((item) => (
+          <div key={item.n} className="item-card" onPointerDown={() => falarItem(item.n)} style={{ touchAction: 'none' }}>
             <div className="item-icone">
               {item.isText ? (
                 <div className="card-caractere-3d">
@@ -323,9 +331,9 @@ useEffect(() => {
         ))}
       </div>
 
-      <div className="controles-navegacao">
-        <button className="btn-nav" onClick={() => scrollGrade(-1)}>&larr;</button>
-        <button className="btn-nav" onClick={() => scrollGrade(1)}>&rarr;</button>
+      <div className="controles-navegacao" style={{ touchAction: 'none' }}>
+        <button className="btn-nav" onPointerDown={() => scrollGrade(-1)} style={{ touchAction: 'none' }}>&larr;</button>
+        <button className="btn-nav" onPointerDown={() => scrollGrade(1)} style={{ touchAction: 'none' }}>&rarr;</button>
       </div>
     </div>
   );
