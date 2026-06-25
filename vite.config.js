@@ -21,12 +21,12 @@ export default defineConfig({
         short_name: "Catavento",
         name: "Catavento",
         icons: [
-          { src: "icon-192.png", type: "image/png", sizes: "192x192", purpose: "any" },
-          { src: "icon-512.png", type: "image/png", sizes: "512x512", purpose: "any" }
+          { src: "/icon-192.png", type: "image/png", sizes: "192x192", purpose: "any" },
+          { src: "/icon-512.png", type: "image/png", sizes: "512x512", purpose: "any" }
         ],
         start_url: "/",
-        background_color: "#000000",
-        theme_color: "#000000",
+        background_color: "#0d1b2a",
+        theme_color: "#0d1b2a",
         display: "standalone",
         orientation: "portrait"
       }
