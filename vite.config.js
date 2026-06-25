@@ -8,6 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       strategies: 'generateSW',
+      manifestFilename: 'manifest.webmanifest',
       workbox: {
         globPatterns: ['**/*.{js,css,html}', '*.png'],
         skipWaiting: true,
