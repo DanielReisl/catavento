@@ -8,7 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       strategies: 'generateSW',
-      injectRegister: 'script', // <-- Força a criação do script de registro físico
+      buildBase: '/', // <-- Garante que os arquivos fiquem na raiz do build
       manifestFilename: 'manifest.webmanifest',
       workbox: {
         globPatterns: ['**/*.{js,css,html}', '*.png'],
@@ -40,5 +40,9 @@ export default defineConfig({
         orientation: "portrait"
       }
     })
-  ]
+  ],
+  build: {
+    assetsDir: 'assets',
+    emptyOutDir: true // <-- Limpa o cache do build anterior na Vercel antes de gerar o novo
+  }
 });
