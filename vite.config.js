@@ -9,7 +9,6 @@ export default defineConfig({
       strategies: 'generateSW',
       manifestFilename: 'manifest.json',
       registerType: 'autoUpdate',
-      injectRegister: 'inline',
       includeAssets: ['icon-192.png', 'icon-512.png'],
       workbox: {
         globPatterns: ['**/*.{js,css,html}', '*.png'], // <-- Ajustado para buscar o PNG na raiz do build
