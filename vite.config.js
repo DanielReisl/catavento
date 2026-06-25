@@ -12,7 +12,7 @@ export default defineConfig({
       injectRegister: 'inline',
       includeAssets: ['icon-192.png', 'icon-512.png'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png}'],
+        globPatterns: ['**/*.{js,css,html}', '*.png'], // <-- Ajustado para buscar o PNG na raiz do build
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true
