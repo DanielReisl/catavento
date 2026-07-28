@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Catavento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="painel-jogo">
+    <div class="menu-categorias" role="tablist" aria-label="Categorias do aplicativo">
+      <button *ngFor="let cat of categorias" class="btn-categoria" [class.ativo]="cat === categoria" (click)="alternarCategoria(cat)">
+        {{ cat.toUpperCase() }}
+      </button>
+    </div>
+
+    <div class="area-horizontal">
+      <div *ngFor="let item of itensAtuais" class="item-card" (click)="falarItem(item.n)">
+        <div class="item-icone">
+          <ng-container *ngIf="item.isText; else imagem">
+            <div class="card-caractere-3d">
+              <span class="texto-caractere-3d">{{ item.v }}</span>
+            </div>
+          </ng-container>
+          <ng-template #imagem>
+            <img [src]="item.i" [alt]="item.n" />
+          </ng-template>
+        </div>
+        <div class="item-nome">{{ item.n }}</div>
+      </div>
+    </div>
+
+    <div class="controles-navegacao">
+      <button class="btn-nav" type="button" aria-label="Voltar">←</button>
+      <button class="btn-nav" type="button" aria-label="Avançar">→</button>
+    </div>
+  </div>
+
+  <div *ngIf="eventoInstalacao" class="install-banner">
+    <p>Deseja instalar o Catavento no tablet?</p>
+    <button (click)="dispararInstalacao()">Instalar aplicativo</button>
+  </div>
+</ion-content>

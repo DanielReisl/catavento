@@ -1,0 +1,7 @@
+{
+  "name": "catavento-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
