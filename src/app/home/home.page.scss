@@ -36,19 +36,25 @@
   background: #1e90ff;
 }
 
-.area-horizontal {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+.carrossel-area {
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
+  overflow: hidden;
   margin: 16px 0;
+  touch-action: pan-y;
+}
+
+.carrossel-track {
+  display: flex;
+  gap: 16px;
+  transition: transform 0.25s ease;
+  will-change: transform;
+  padding: 6px 0 6px 4px;
 }
 
 .item-card {
-  width: min(22vw, 220px);
-  min-width: 150px;
+  width: 240px;
+  min-width: 240px;
   aspect-ratio: 1/1;
   border-radius: 28px;
   background: #1b263b;
@@ -57,9 +63,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 16px;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  transform: scale(0.96);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.item-card.item-proximo {
+  transform: scale(0.99);
+  opacity: 0.95;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 .item-icone {

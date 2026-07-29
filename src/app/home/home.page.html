@@ -12,30 +12,33 @@
       </button>
     </div>
 
-    <div class="area-horizontal">
-      <div *ngFor="let item of itensAtuais" class="item-card" (click)="falarItem(item.n)">
-        <div class="item-icone">
-          <ng-container *ngIf="item.isText; else imagem">
-            <div class="card-caractere-3d">
-              <span class="texto-caractere-3d">{{ item.v }}</span>
-            </div>
-          </ng-container>
-          <ng-template #imagem>
-            <img [src]="item.i" [alt]="item.n" />
-          </ng-template>
+    <div class="carrossel-area"
+         (pointerdown)="onArrastarInicio($event)"
+         (pointermove)="onArrastar($event)"
+         (pointerup)="onArrastarFim()"
+         (pointerleave)="onArrastarFim()">
+      <div class="carrossel-track" [style.transform]="'translateX(' + (offsetCarrossel - (indiceCarrossel * (larguraItem + 16))) + 'px)'">
+        <div *ngFor="let item of itensAtuais; let i = index" class="item-card" [class.item-proximo]="i === indiceCarrossel + 1" (click)="falarItem(item.n)">
+          <div class="item-icone">
+            <ng-container *ngIf="item.isText; else imagem">
+              <div class="card-caractere-3d">
+                <span class="texto-caractere-3d">{{ item.v }}</span>
+              </div>
+            </ng-container>
+            <ng-template #imagem>
+              <img [src]="item.i" [alt]="item.n" />
+            </ng-template>
+          </div>
+          <div class="item-nome">{{ item.n }}</div>
         </div>
-        <div class="item-nome">{{ item.n }}</div>
       </div>
     </div>
 
     <div class="controles-navegacao">
-      <button class="btn-nav" type="button" aria-label="Voltar">←</button>
-      <button class="btn-nav" type="button" aria-label="Avançar">→</button>
+      <button class="btn-nav" type="button" aria-label="Voltar" (click)="navegarCarrossel(-1)">←</button>
+      <button class="btn-nav" type="button" aria-label="Avançar" (click)="navegarCarrossel(1)">→</button>
     </div>
   </div>
 
-  <div *ngIf="eventoInstalacao" class="install-banner">
-    <p>Deseja instalar o Catavento no tablet?</p>
-    <button (click)="dispararInstalacao()">Instalar aplicativo</button>
-  </div>
 </ion-content>
+

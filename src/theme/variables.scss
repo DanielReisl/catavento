@@ -1,2 +1,42 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// Ionic theme variables — https://ionicframework.com/docs/theming/
+// Cores alinhadas com a identidade visual do Catavento
+
+:root {
+  /** primary **/
+  --ion-color-primary: #1e90ff;
+  --ion-color-primary-rgb: 30, 144, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1a7fe0;
+  --ion-color-primary-tint: #359bff;
+
+  /** secondary **/
+  --ion-color-secondary: #415a77;
+  --ion-color-secondary-rgb: 65, 90, 119;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #394f69;
+  --ion-color-secondary-tint: #546b85;
+
+  /** dark (background) **/
+  --ion-background-color: #0d1b2a;
+  --ion-background-color-rgb: 13, 27, 42;
+
+  /** text **/
+  --ion-text-color: #e0e1dd;
+  --ion-text-color-rgb: 224, 225, 221;
+
+  /** toolbar **/
+  --ion-toolbar-background: #1b263b;
+  --ion-toolbar-color: #e0e1dd;
+
+  /** card **/
+  --ion-card-background: #1b263b;
+
+  /** Variáveis customizadas do projeto **/
+  --catavento-bg: #0d1b2a;
+  --catavento-surface: #1b263b;
+  --catavento-accent: #1e90ff;
+  --catavento-btn: #415a77;
+  --catavento-text: #e0e1dd;
+}
